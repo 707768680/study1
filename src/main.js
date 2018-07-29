@@ -9,7 +9,7 @@ import './lib/mui/css/mui.css'
 
 // 按需导入 Mint-UI 中的组件
 import { Header } from 'mint-ui'
-Vue.component(Header.name, Header)
+Vue.component(Header.name, Header) 
 
 
 var vm = new Vue({
