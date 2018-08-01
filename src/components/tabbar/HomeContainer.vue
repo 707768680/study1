@@ -95,7 +95,7 @@
 	.mui-grid-view.mui-grid-9{
 		background-color: #fff;
 		border: none;
-		img:{
+		img {
 			width: 60px;
 			height: 60px;
 		}
