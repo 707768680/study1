@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { Toast } from "mini-ui";
+import { Toast } from "mint-ui";
 
 export default {
 	data() {

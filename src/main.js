@@ -26,18 +26,20 @@ Vue.filter('dataFromat',function (dataStr,pattern = "YYYY-MM-DD HH:mm:ss"){
 import router from "./router.js";
 
 // 按需导入 Mint-UI 中的组件
-import { Header, Swipe, SwipeItem ,Button } from "mint-ui";
+import { Header, Swipe, SwipeItem ,Button,Lazyload } from "mint-ui";
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
-
+Vue.use(Lazyload);
 // 导入 vue-resource
 import VueResource from "vue-resource";
 // 安装 vue-resource
 Vue.use(VueResource);
 // 设置请求的根路径
 Vue.http.options.root = 'http://vue.studyit.io'
+// 全局设置 post 时候表单数据格式组织形式  application/x-www-form-urlencoded  https://juejin.im/entry/58eaf351a22b9d0058a8e35c
+Vue.http.options.emulateJSON = true;
 
 var vm = new Vue({
   el: "#app",
