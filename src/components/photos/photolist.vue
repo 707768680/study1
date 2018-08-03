@@ -5,17 +5,22 @@
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
 						<a :class="['mui-control-item', item.id == 0 ? 'mui-active':'']" 
-                        v-for="item in cates" :key=item.id @click="getPhotoListByCateId(item.id)">
+                        v-for="item in cates" :key=item.id @tag="getPhotoListByCateId(item.id)">
 							{{ item.title }}
 						</a>
 					</div>
 				</div>
 
 		</div>
-        <ul>
-            <li v-for="item in list" :key="item.id">
+      <!-- 图片列表区域 -->
+        <ul class="photo-list">
+            <router-link  v-for="item in list" :key="item.id" :to="'/home/photoinfo/' + item.id" tag="li">
                 <img v-lazy="item.image_url">
-             </li>
+                <div class="info">
+                  <h1 class="info-title">{{ item.title }}</h1>
+                  <div class="info-body">{{ item.zhaiyao }}</div>
+                </div>
+             </router-link>
 </ul>
     </div>
 </template>
@@ -27,7 +32,7 @@ import mui from "../../lib/mui/js/mui.js";
 export default {
   data() {
     return {
-      cates: [] ,// 所有分类的列表数组
+      cates: [], // 所有分类的列表数组
       list: []
     };
   },
@@ -53,13 +58,13 @@ export default {
         }
       });
     },
-    getPhotoListByCateId(cateId){
-        // 根据分类ID, 获取图片列表
-        this.$http.get("api/getimages/" + cateid).then(result => {
-            if(result.body.status === 0){
-                this.list = result.body.message;
-            }
-        });
+    getPhotoListByCateId(cateId) {
+      // 根据分类ID, 获取图片列表
+      this.$http.get("api/getimages/" + cateid).then(result => {
+        if (result.body.status === 0) {
+          this.list = result.body.message;
+        }
+      });
     }
   }
 };
@@ -70,10 +75,44 @@ export default {
   // 解决谷歌浏览器报错问题, 由于谷歌浏览器存在体改滑动流畅度的东西,这里需要设置一下
   touch-action: pan-y;
 }
-img[lazy=loading] {
-  width: 40px;
-  height: 300px;
-  margin: auto;
+
+.photo-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  padding-bottom: 0;
+  li {
+    background-color: #ccc;
+    text-align: center;
+    margin-bottom: 10px;
+    box-shadow: 0 0 9px ;
+    position: relative;
+    img{
+      width: 100%;
+      vertical-align: middle;
+    }
+    img[lazy="loading"] {
+      width: 40px;
+      height: 300px;
+      margin: auto;
+    }
+    .info{
+      color:white;
+      text-align: left;
+      position: absolute;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.4); 
+      max-height: 84px;
+      .info-title{
+        font-size: 14px;
+      }
+      .info-body{
+        font-size: 13px;
+      }
+     
+    }
+
+  }
 }
 </style>
 
