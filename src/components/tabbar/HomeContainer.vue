@@ -11,9 +11,7 @@
   	    <mt-swipe-item>
   	    	
   	    </mt-swipe-item>
-  	    <!-- <mt-swipe-item v-for="item in lunboList" :key="item.url">
-  	    	<img :src="item.img" alt="">
-  	    </mt-swipe-item> -->
+		<swiper :lunbotuList="lunbotuList" :isfull="true"></swiper>	
 	  </mt-swipe>
 
 	  <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -44,6 +42,7 @@
 </template>
 
 <script>
+	import swiper from "../subcomponents/swiper.vue"
 	import { Toast } from 'mint-ui';
 
 	export default {
@@ -65,6 +64,9 @@
 					}
 				});
 			}
+		},
+		comments :{
+			swiper
 		}
 	};
 
