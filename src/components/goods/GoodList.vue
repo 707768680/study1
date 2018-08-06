@@ -63,7 +63,7 @@ export default {
         },
         getMore(){
             this.pageindex++;
-            this.getGoodsList();
+            this.getGoodsList(); 
         },
         goDetail(id){  //使用js形式进行路由导航 window.location
             // 区分 this.$router 和 this.$route
