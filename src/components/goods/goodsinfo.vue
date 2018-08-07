@@ -114,6 +114,15 @@ export default {
     addShopCar() {
       // 添加到购物车
       this.ballFlag = !this.ballFlag;
+      // 拼接出一个存储到 store 中的 car 中的商品信息数组 
+      // {id: 商品id, count: 要购买的数量, price: 商品的单价, selected: 是否选中该商品}
+      var goodsinfo = { 
+        id: this.id, 
+        count: this.selectedCount, 
+        price: this.goodsinfo.sell_price, 
+        selected: true
+        }
+      this.$store.commit('addToCar',goodsinfo);
 		},
 		beforeEnter(el) {
 			el.style.transform ="translate(0,0)"
