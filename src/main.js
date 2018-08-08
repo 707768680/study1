@@ -18,6 +18,10 @@ Vue.use(VueRouter);
 // 注册 vuex
 import Vuex from 'vuex'
 vue.use(Vuex)
+
+// 每次刚进入网站,肯定会 调用 main.js, 在刚调用的时候,把购物车的数据读出来,放到 store 中
+var car = JSON.parse(localStorage.getItem('car') || '[]')
+
 var store = new Vuex.Store({
   state:{  //  this.$store.state.***
     car: []  // 将购物车中商品的数据,用一个数组存储起来,存储一些商品的对象,
@@ -42,10 +46,76 @@ var store = new Vuex.Store({
       if(!flag){
         state.car.push(goodsinfo)
       }
+
+      // 当更新 car 之后 , 把 car 数组, 存储到 localStorage 中
+      localStorage.setItem('car',JSON.stringify(state.car))
+    },
+    updatedGoodsInfo(state,goodsinfo) {
+      // 修改购物车中商品的数量值
+      // 分析: 
+      state.car.some(item => {
+        if(item.id == goodsinfo.id){
+          item.count = parseInt(goodsinfo.count)
+          return true
+        }
+      })
+       // 当更新 car 之后 , 把 car 数组, 存储到 localStorage 中
+      localStorage.setItem('car',JSON.stringify(state.car))
+    },
+    removeFormCar(state,id){
+      // 根据 id 从 store 中的购物车中删除对用的那条商品数据
+      state.car.some((item,i) => {
+        if(item.id == id){
+          state.car.splice(i,1)
+          return true;
+        }
+      })
+    },
+    updatedGoodsSelected(state,info){
+      state.car.some(item => {
+        if(item.id == info.id){
+          item.selected = info.selected
+        }
+      })
+       // 当更新 car 之后 , 把 car 数组, 存储到 localStorage 中
+       localStorage.setItem('car',JSON.stringify(state.car))
     }
   },
   getters: {  // this.$store.getters.***
-
+    getAllCount(state) {
+      var c = 0;
+      state.car.forEach(item => {
+        c += item.count
+      })
+      return c
+    },
+    getGoodsCount(state){
+      var o = {}
+      state.car.forEach(item => {
+        0[item.id] = item.count
+      })
+      return o
+    },
+    getGoodsSelected(state){
+      var o = {}
+      state.car.forEach(item => {
+        o[item.id] = item.selected
+      })
+      return o
+    },
+    getGoodsCountAndAmount(state){
+      var o = {
+        count:0,  // 勾选的数量
+        amount:0  // 勾选的总价
+      }
+      state.car.forEach(item => {
+        if(item.selected){
+          o.count += item.count
+          o.amount += item.count * item.price
+        }
+      })
+      return o
+    }
   }
 })
 
