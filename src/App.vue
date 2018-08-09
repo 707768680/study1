@@ -1,7 +1,11 @@
 <template>
   <div class="app-contatiner">
   <!-- header -->
-  <mt-header fixed title="黑马程序员"></mt-header>
+  <mt-header fixed title="黑马程序员">
+     <span slot="left" @click="goBack" v-show="flag">
+       <mt-button icon="back">返回</mt-button>
+     </span>
+  </mt-header>
 
   
   <transition>
@@ -34,6 +38,31 @@
 </template>
 
 <script>
+export default {
+  data(){
+    return {
+      flag: flase
+    }
+  },
+  created() {
+    this.flag = this.$route.path === '/home'? false : true;
+  },
+  methods: {
+    goBack(){
+      // 点击后退
+      this.$router.go(-1)
+    }
+  },
+  watch: {
+    '$route.path': function(newVal){
+      if(newVal == "/home"){
+        this.flag = false
+      }else{
+        this.flag = true
+      }
+    }
+  }
+}
 </script>
 
 

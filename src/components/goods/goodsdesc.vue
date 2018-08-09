@@ -18,8 +18,8 @@ export default {
             info:{}  // 图文数据
         };
     },
-    created: {
-        getGoodsDesc();
+    created() {
+        this.getGoodsDesc()
     },
     methods: {
         getGoodsDesc(){
